@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "description": "Roulette game with Vimeo videos",
   "main": "app.js",
-  "scripts": {
-    "postinstall": "grunt build"
-  },
   "repository": "",
   "author": "Dan Applegate <applegatedt@gmail.com>",
   "license": "BSD",

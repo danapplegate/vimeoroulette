@@ -40,4 +40,5 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks tasks for tasks in taskList
 
     grunt.registerTask 'default', ['watch']
-    grunt.registerTask 'build', ['sass', 'coffee']
+    # Post-receive build task to be executed on heroku node
+    grunt.registerTask 'heroku', ['sass', 'coffee']
