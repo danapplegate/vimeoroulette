@@ -1,7 +1,7 @@
 !!!5
 html
   head
-    title Vimeo Roulette
+    title #{title}
     link(rel='stylesheet', href='/css/main.css')
     script(type='text/javascript',src='/socket.io/socket.io.js')
     script(type='text/javascript')
@@ -12,7 +12,7 @@ html
       });
   body
     header
-      h1 My Site
+      h1 #{title}
     .container
       .main-content
         block content

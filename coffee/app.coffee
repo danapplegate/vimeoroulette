@@ -18,15 +18,30 @@ if process.env.REDISTOGO_URL
     db.auth(rtg.auth.split(":")[1])
 else
     db = redis.createClient()
+    pub = redis.createClient()
 
 app.use express.static(__dirname + '/public')
+app.use (req, res, next)->
+    res.locals =
+        title: 'Vimeo Roulette'
+    next()
+
+app.get '/room/:id', (req, res)->
+    res.render 'room',
+        room_id: req.params.id
 
 app.get '/', (req, res) ->
     res.render 'index'
 
 io.sockets.on 'connection', (socket)->
-    socket.emit 'news',
-        hello: 'world'
+    pub.publish 'users', 'A new user has joined!'
+    db.on 'message', (channel, message)->
+        socket.emit 'news', channel + ': ' + message
+    db.subscribe 'users'
+
+    socket.on 'disconnect', ->
+        pub.publish 'users', 'A user has left'
+        db.unsubscribe 'users'
 
 app.get '/', (req, res) ->
     res.send req.online.length + ' users online!'
