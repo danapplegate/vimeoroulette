@@ -36,7 +36,7 @@ module.exports = (grunt) ->
                     nospawn: true
                     interrupt: true
 
-    taskList = ['grunt-contrib-sass', 'grunt-contrib-coffee', 'grunt-contrib-watch', 'grunt-express']
+    taskList = ['grunt-sass', 'grunt-contrib-coffee', 'grunt-contrib-watch', 'grunt-express']
     grunt.loadNpmTasks tasks for tasks in taskList
 
     grunt.registerTask 'default', ['watch']
