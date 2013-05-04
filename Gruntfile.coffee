@@ -7,7 +7,7 @@ module.exports = (grunt) ->
         sass:
             dev:
                 files:
-                    'css/main.css': 'sass/main.scss'
+                    'public/css/main.css': 'sass/main.scss'
         coffee:
             dev:
                 files: [

@@ -1,6 +1,16 @@
 express = require 'express'
-redis = require 'redis'
 app = express()
+server = require('http').createServer(app)
+io = require('socket.io').listen(server);
+redis = require 'redis'
+
+io.configure ->
+    io.set 'transports', ['xhr-polling']
+    io.set 'polling duration', 10
+
+app.set 'views', __dirname + '/views'
+app.set 'view engine', 'jade'
+
 # Connect to redis server
 if process.env.REDISTOGO_URL
     rtg = require('url').parse(process.env.REDISTOGO_URL)
@@ -9,18 +19,19 @@ if process.env.REDISTOGO_URL
 else
     db = redis.createClient()
 
-# Track online users
-app.use (req, res, next)->
-    db.zadd 'online', Date.now(), req.headers['user-agent'], next
+app.use express.static(__dirname + '/public')
 
-app.use (req, res, next)->
-    min = 60 * 1000
-    ago = Date.now() - min
-    db.zrevrangebyscore 'online', '+inf', ago, (err, users)->
-        return next err if err
-        req.online = users
-        next()
+app.get '/', (req, res) ->
+    res.render 'index'
+
+io.sockets.on 'connection', (socket)->
+    socket.emit 'news',
+        hello: 'world'
 
 app.get '/', (req, res) ->
     res.send req.online.length + ' users online!'
-module.exports = app
+
+module.exports = server
+# delegates user() function
+module.exports.use = ->
+  app.use.apply app, arguments
