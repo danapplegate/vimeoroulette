@@ -1,0 +1,8 @@
+@import "buttons";
+h1 {
+    color: red;
+    
+    &.title {
+        color: blue
+    }
+}

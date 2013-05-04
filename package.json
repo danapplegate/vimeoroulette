@@ -1,0 +1,22 @@
+{
+  "name": "vimeoroulette",
+  "version": "0.0.0",
+  "description": "Roulette game with Vimeo videos",
+  "main": "app.js",
+  "scripts": {
+    "postinstall": "grunt build"
+  },
+  "repository": "",
+  "author": "Dan Applegate <applegatedt@gmail.com>",
+  "license": "BSD",
+  "dependencies": {
+    "express": "~3.2.2",
+    "redis": "~0.8.3"
+    "grunt": "~0.4.1",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt-contrib-sass": "~0.3.0",
+    "grunt-express": "~0.3.3",
+    "grunt-cli": "~0.1.7"
+  }
+}
