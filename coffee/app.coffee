@@ -1,7 +1,13 @@
+
 express = require 'express'
 redis = require 'redis'
-db = redis.createClient()
 app = express()
+# Connect to redis server
+db = if process.env.REDISTOGO_URL
+    rtg = require('url').parse(process.env.REDISTOGO_URL)
+    redis.createClient(rtg.port, rtg.hostname)
+else
+    redis.createClient()
 
 # Track online users
 app.use (req, res, next)->
