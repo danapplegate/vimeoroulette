@@ -13,7 +13,6 @@
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-contrib-watch": "~0.4.0",
     "grunt-contrib-sass": "~0.3.0",
-    "grunt-express": "~0.3.3",
-    "grunt-cli": "~0.1.7"
+    "grunt-express": "~0.3.3"
   }
 }
