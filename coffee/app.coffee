@@ -5,7 +5,7 @@ app = express()
 # Connect to redis server
 db = if process.env.REDISTOGO_URL
     rtg = require('url').parse(process.env.REDISTOGO_URL)
-    redis.createClient(rtg.port, rtg.hostname)
+    redis.createClient(rtg.port, rtg.hostname).auth(rtg.auth.split(":")[1])
 else
     redis.createClient()
 
