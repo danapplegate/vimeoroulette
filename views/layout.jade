@@ -11,9 +11,17 @@ html
         socket.emit('my other event', { my: 'data' });
       });
   body
-    p User: #{user}
-    header
-      h1 #{title}
+    div.persistent-header
+      - if (typeof(user) !== 'undefined')
+        a(href="#{user.link}"): img(
+          src='#{user.images.thumbnail.link}'
+          width='#{user.images.thumbnail.width}'
+          height='#{user.images.thumbnail.height}')
+        span.user-name: a(href="#{user.link}")=  user.name
+      - else
+        a(href=authUrl) Login
+      header
+        h1 #{title}
     .container
       if flash
         .flash-message #{flash}

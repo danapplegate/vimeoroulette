@@ -31,14 +31,18 @@ app.use (req, res, next)->
         title: 'Vimeo Roulette'
         flash: false
     next()
+app.use auth
 app.use (req, res, next)->
-    res.locals({user: JSON.stringify(req.session.user) if req.session.state == 'authorized'})
+    if req.session.state == 'authorized'
+        user = req.session.user
+        # Map the user images to make them more useful
+        image_keys = ['thumbnail', 'small', 'medium', 'large']
+        user.images = {}
+        user.images[image_keys[i]] = picture for picture, i in user.pictures
+        res.locals({user: user if req.session.state == 'authorized'})
+    else
+        res.locals({authUrl: auth.authUrl})
     next()
-
-app.get '/user/auth', auth, (req, res)->
-    res.redirect '/' if req.session.state == 'authorized'
-    res.render 'auth',
-        authUrl: auth.authUrl
 
 app.get '/room/:id', (req, res)->
     res.render 'room',
