@@ -1,5 +1,6 @@
 url_module = require 'url'
 express = require 'express'
+crypto = require 'crypto'
 app = express()
 server = require('http').createServer(app)
 io = require('socket.io').listen(server)
@@ -44,9 +45,18 @@ app.use (req, res, next)->
         res.locals({authUrl: auth.authUrl})
     next()
 
-app.get '/room/:id', (req, res)->
+app.get '/room/new', (req, res)->
+    # Choose a new room hash
+    date = new Date()
+    time = date.UTC()
+    res.send time
+    hash = crypto.createHash('md5').update(time).digest("hex");
+    res.redirect "/room/#{hash}"
+
+app.get '/room/[a-fA-F0-9]{32}', (req, res)->
     res.render 'room',
         room_id: req.params.id
+
 
 app.get '/', (req, res) ->
     res.render 'index'

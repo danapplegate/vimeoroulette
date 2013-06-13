@@ -13,11 +13,16 @@ html
   body
     div.persistent-header
       - if (typeof(user) !== 'undefined')
-        a(href="#{user.link}"): img(
-          src='#{user.images.thumbnail.link}'
-          width='#{user.images.thumbnail.width}'
-          height='#{user.images.thumbnail.height}')
-        span.user-name: a(href="#{user.link}")=  user.name
+        ul.user-menu
+          li
+            a(href="#{user.link}"): img(
+              src='#{user.images.thumbnail.link}'
+              width='#{user.images.thumbnail.width}'
+              height='#{user.images.thumbnail.height}')
+            span.user-name: a(href="#{user.link}")=  user.name
+          li: a(href="/room/new") New Room
+          li: a(href="/channels") Channels
+          li: a(href="/user/logout") Logout
       - else
         a(href=authUrl) Login
       header
